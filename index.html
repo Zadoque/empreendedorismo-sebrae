@@ -424,7 +424,8 @@ function copyResult(){
 function shareWhatsApp(){
   const {scores} = computeScores();
   const sorted = ["R","A","P"].sort((a,b)=>scores[b]-scores[a]);
-  let msg = "*📊 Resultado – Questionário de Motivações SEBRAE*\n\n";
+  let msg = "Disciplina de Empreendedorismo 2026/1 ministrada pelo Prof. Dr. Manuel Antonio Molina Palma \n\n";
+  msg += "*📊 Resultado – Questionário de Motivações SEBRAE*\n\n";
   msg += "_Teoria das Necessidades de McClelland_\n\n";
   msg += "*Minhas respostas:*\n";
   answers.forEach((ans,qi)=>{ if(ans!==null){ const opt=questions[qi].options[ans]; msg+="Q"+(qi+1)+": item "+opt.item+"\n"; } });
