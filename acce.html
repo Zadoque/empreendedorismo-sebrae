@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ACCE – Autoavaliação do Comportamento Empreendedor</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0fdf4;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px}
+    .container{max-width:680px;width:100%}
+    header{text-align:center;padding:24px 0 16px}
+    header h1{font-size:1.4rem;color:#14532d;font-weight:700}
+    header p{color:#6b7280;font-size:.85rem;margin-top:4px}
+    .card{background:#fff;border-radius:16px;padding:32px;box-shadow:0 2px 12px rgba(0,0,0,.08);margin-bottom:20px}
+    .intro-badge{display:inline-block;background:#dcfce7;color:#166534;font-size:.75rem;font-weight:600;padding:4px 12px;border-radius:20px;margin-bottom:16px}
+    .intro-title{font-size:1.5rem;font-weight:700;color:#111827;margin-bottom:12px}
+    .intro-text{color:#4b5563;line-height:1.7;margin-bottom:16px}
+    .intro-note{background:#fef9c3;border-left:4px solid #f59e0b;padding:12px 16px;border-radius:0 8px 8px 0;color:#78350f;font-size:.9rem;margin-bottom:24px}
+    .conjuncts-preview{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:24px}
+    .cj-pill{border-radius:10px;padding:12px;text-align:center;font-size:.82rem;font-weight:600}
+    .cj-r{background:#dcfce7;color:#166534}
+    .cj-pl{background:#dbeafe;color:#1e40af}
+    .cj-po{background:#ede9fe;color:#5b21b6}
+    .btn-primary{background:#16a34a;color:#fff;border:none;padding:14px 32px;border-radius:10px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;transition:background .2s}
+    .btn-primary:hover{background:#15803d}
+    .btn-primary:disabled{background:#86efac;cursor:not-allowed}
+    /* QUESTION */
+    .q-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+    .q-number{font-size:.8rem;font-weight:600;color:#16a34a;text-transform:uppercase;letter-spacing:.05em}
+    .q-char-badge{font-size:.75rem;font-weight:600;padding:3px 10px;border-radius:12px}
+    .badge-r{background:#dcfce7;color:#166534}
+    .badge-pl{background:#dbeafe;color:#1e40af}
+    .badge-po{background:#ede9fe;color:#5b21b6}
+    .q-text{font-size:1.05rem;font-weight:600;color:#111827;line-height:1.6;margin-bottom:28px}
+    .scale-wrap{margin-bottom:8px}
+    .scale-buttons{display:flex;gap:8px}
+    .scale-btn{flex:1;height:56px;border:2px solid #e5e7eb;border-radius:10px;background:#f9fafb;font-size:1.2rem;font-weight:700;color:#374151;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center}
+    .scale-btn:hover{border-color:#86efac;background:#f0fdf4}
+    .scale-btn.selected{border-color:#16a34a;background:#16a34a;color:#fff}
+    .scale-labels{display:flex;justify-content:space-between;margin-top:6px;font-size:.75rem;color:#9ca3af;padding:0 4px}
+    /* PROGRESS */
+    .progress-wrap{margin-top:24px}
+    .progress-bar{background:#e5e7eb;border-radius:999px;height:6px;overflow:hidden}
+    .progress-fill{background:#16a34a;height:100%;border-radius:999px;transition:width .3s ease}
+    .progress-label{display:flex;justify-content:space-between;margin-bottom:6px;font-size:.8rem;color:#9ca3af}
+    .nav-btns{display:flex;gap:12px;margin-top:20px}
+    .btn-secondary{background:#f3f4f6;color:#374151;border:none;padding:12px 24px;border-radius:10px;font-size:.9rem;font-weight:500;cursor:pointer;flex:1;transition:background .2s}
+    .btn-secondary:hover{background:#e5e7eb}
+    /* RESULTS */
+    .result-header{text-align:center;margin-bottom:28px}
+    .result-header h2{font-size:1.4rem;font-weight:700;color:#111827;margin-bottom:6px}
+    .result-header p{color:#6b7280}
+    /* Conjunct cards */
+    .conjunct-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:28px}
+    @media(max-width:500px){.conjunct-cards{grid-template-columns:1fr}}
+    .conjunct-card{border-radius:12px;padding:18px;text-align:center}
+    .cj-card-r{background:#dcfce7;border:2px solid #16a34a}
+    .cj-card-pl{background:#dbeafe;border:2px solid #2563eb}
+    .cj-card-po{background:#ede9fe;border:2px solid #7c3aed}
+    .cj-card-title{font-size:.8rem;font-weight:700;margin-bottom:6px}
+    .cj-card-r .cj-card-title{color:#166534}
+    .cj-card-pl .cj-card-title{color:#1e40af}
+    .cj-card-po .cj-card-title{color:#5b21b6}
+    .cj-card-score{font-size:2rem;font-weight:800}
+    .cj-card-r .cj-card-score{color:#16a34a}
+    .cj-card-pl .cj-card-score{color:#2563eb}
+    .cj-card-po .cj-card-score{color:#7c3aed}
+    .cj-card-max{font-size:.75rem;color:#9ca3af}
+    /* Chart */
+    .chart-section h3{font-size:1rem;font-weight:700;color:#111827;margin-bottom:16px}
+    .chart-row{margin-bottom:14px}
+    .chart-row-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+    .chart-char-name{font-size:.82rem;font-weight:600;color:#374151}
+    .chart-char-score{font-size:.82rem;font-weight:700}
+    .chart-bar-bg{background:#f3f4f6;border-radius:999px;height:12px;overflow:hidden}
+    .chart-bar-fill{height:100%;border-radius:999px;transition:width .6s ease}
+    .fill-r{background:#16a34a}
+    .fill-pl{background:#2563eb}
+    .fill-po{background:#7c3aed}
+    .chart-section-label{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin:20px 0 10px;padding:4px 10px;border-radius:6px;display:inline-block}
+    .label-r{background:#dcfce7;color:#166534}
+    .label-pl{background:#dbeafe;color:#1e40af}
+    .label-po{background:#ede9fe;color:#5b21b6}
+    /* Detail table */
+    .detail-table{width:100%;border-collapse:collapse;font-size:.85rem;margin-top:12px}
+    .detail-table th{padding:8px 10px;text-align:left;font-weight:700;color:#fff;font-size:.8rem}
+    .detail-table td{padding:8px 10px;border-bottom:1px solid #f3f4f6;color:#374151}
+    .detail-table tr:last-child td{border-bottom:none}
+    .detail-table .q-nums{color:#9ca3af;font-size:.75rem}
+    .th-r{background:#16a34a}.th-pl{background:#2563eb}.th-po{background:#7c3aed}
+    /* Action buttons */
+    .action-btns{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+    .btn-copy{background:#f3f4f6;color:#374151;border:2px solid #e5e7eb;padding:12px;border-radius:10px;font-size:.95rem;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+    .btn-copy:hover{background:#e5e7eb}
+    .btn-whatsapp{background:#25d366;color:#fff;border:none;padding:12px;border-radius:10px;font-size:.95rem;font-weight:600;cursor:pointer;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+    .btn-whatsapp:hover{background:#128c7e}
+    .btn-restart{background:transparent;color:#16a34a;border:2px solid #16a34a;padding:12px;border-radius:10px;font-size:.95rem;font-weight:600;cursor:pointer;transition:all .2s;width:100%}
+    .btn-restart:hover{background:#f0fdf4}
+    .btn-home{background:#f3f4f6;color:#374151;border:none;padding:12px;border-radius:10px;font-size:.95rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;text-decoration:none}
+    .btn-home:hover{background:#e5e7eb}
+    footer{text-align:center;padding:20px 0;color:#9ca3af;font-size:.78rem;line-height:1.8}
+    footer a{color:#9ca3af;text-decoration:none}
+    footer a:hover{text-decoration:underline}
+    .hidden{display:none!important}
+    .separator{border:none;border-top:1px solid #e5e7eb;margin:24px 0}
+    .copied-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 20px;border-radius:8px;font-size:.9rem;font-weight:500;opacity:0;transition:opacity .3s;pointer-events:none;z-index:999}
+    .copied-toast.show{opacity:1}
+    .highlight-best{background:#f0fdf4}
+    .highlight-best .chart-char-name{color:#166534;font-weight:700}
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>📈 Autoavaliação do Comportamento Empreendedor</h1>
+    <p>Características do Comportamento Empreendedor · SEBRAE</p>
+  </header>
+
+  <!-- INTRO -->
+  <div id="screen-intro" class="card">
+    <span class="intro-badge">Disciplina de Empreendedorismo</span>
+    <h2 class="intro-title">Como você age no dia a dia?</h2>
+    <p class="intro-text">
+      Esta autoavaliação, extraída do <strong>Manual do Aluno – SEBRAE (Empretec, 2009)</strong>, analisa
+      <strong>10 características do comportamento empreendedor</strong> agrupadas em 3 conjuntos.
+    </p>
+    <div class="conjuncts-preview">
+      <div class="cj-pill cj-r">🏆 Realização<br><small>5 caracts. · máx 75</small></div>
+      <div class="cj-pill cj-pl">📋 Planejamento<br><small>3 caracts. · máx 45</small></div>
+      <div class="cj-pill cj-po">💪 Poder<br><small>2 caracts. · máx 30</small></div>
+    </div>
+    <p class="intro-text">
+      São <strong>30 comportamentos</strong> avaliados em escala de <strong>1 (nunca) a 5 (sempre)</strong>.
+      Clique no número correspondente — a página avança automaticamente.
+    </p>
+    <div class="intro-note">
+      ⚠️ <strong>Seja honesto consigo mesmo.</strong> Não existe melhor ou pior resposta — o que importa é a resposta verdadeira.
+    </div>
+    <button class="btn-primary" onclick="startQuiz()">Iniciar autoavaliação →</button>
+  </div>
+
+  <!-- QUESTIONS -->
+  <div id="screen-question" class="card hidden">
+    <div class="q-header">
+      <div class="q-number" id="q-number">Comportamento 1 de 30</div>
+      <div class="q-char-badge" id="q-char-badge"></div>
+    </div>
+    <div class="q-text" id="q-text"></div>
+    <div class="scale-wrap">
+      <div class="scale-buttons" id="scale-buttons"></div>
+      <div class="scale-labels"><span>Nunca pratico</span><span>Sempre pratico</span></div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span id="prog-label">1 / 30</span>
+        <span id="prog-pct">0%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+    </div>
+    <div class="nav-btns">
+      <button class="btn-secondary" id="btn-prev" onclick="prevQuestion()">← Anterior</button>
+      <button class="btn-primary" id="btn-results" onclick="showResults()" style="display:none">Ver resultado ✓</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="screen-results" class="hidden">
+    <div class="result-header">
+      <h2>📊 Seu perfil empreendedor</h2>
+      <p>Resultados da autoavaliação de comportamento</p>
+    </div>
+
+    <!-- Conjunct summary cards -->
+    <div class="conjunct-cards" id="conjunct-cards"></div>
+
+    <!-- Chart + detail -->
+    <div class="card">
+      <div class="chart-section">
+        <h3>📈 Gráfico de características</h3>
+        <div id="chart-rows"></div>
+      </div>
+      <hr class="separator">
+      <div id="detail-tables"></div>
+      <div class="action-btns">
+        <button class="btn-copy" onclick="copyResult()">📋 Copiar resultado em texto</button>
+        <button class="btn-whatsapp" onclick="shareWhatsApp()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Compartilhar no WhatsApp
+        </button>
+        <button class="btn-restart" onclick="restartQuiz()">🔄 Refazer autoavaliação</button>
+        <a href="index.html" class="btn-home">🏠 Voltar à página inicial</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Feito por <strong>Zadoque Carneiro</strong> &nbsp;·&nbsp; Nenhum dado é coletado — tudo roda no seu navegador.<br>
+  Baseado no Manual Empretec (SEBRAE, 2009) · Características do Comportamento Empreendedor de McClelland.<br>
+  <a href="https://github.com" target="_blank">🔗 Ver código-fonte no GitHub</a>
+</footer>
+<div class="copied-toast" id="toast">✅ Resultado copiado!</div>
+
+<script>
+const behaviors = [
+  "Faço as coisas antes de solicitado ou antes de forçado pelas circunstâncias.",
+  "Busco autonomia em relação às regras e normas preestabelecidas por outras pessoas.",
+  "Formulo estratégias para influenciar ou persuadir outras pessoas.",
+  "Planejo dividindo tarefas de grande porte em subtarefas com prazos definidos.",
+  "Dedico-me pessoalmente a obter informações necessárias para o desenvolvimento de minhas atividades.",
+  "Estabeleço metas e objetivos que são desafiantes e que têm significado pessoal.",
+  "Ao tomar decisões, avalio alternativas e analiso os riscos envolvidos.",
+  "Encontro maneiras de fazer as coisas da melhor forma, mais rápida ou mais barata.",
+  "Assumo responsabilidade pessoal por solucionar problemas que possam prejudicar a conclusão de um trabalho nas condições estipuladas.",
+  "Busco soluções diante de um obstáculo significativo.",
+  "Desenvolvo novas ideias e projetos além das atuais soluções ou propostas estabelecidas.",
+  "Mantenho meu ponto de vista mesmo diante da oposição ou de resultados inicialmente desanimadores.",
+  "Utilizo minha rede de contatos como estratégia para atingir meus objetivos.",
+  "Constantemente reviso meus planos, levando em conta os resultados obtidos e as mudanças que possam ter ocorrido.",
+  "Pesquiso como realizar determinada atividade ou projeto, antes de sua execução.",
+  "Tenho visão de longo prazo do que espero alcançar, de forma clara e específica.",
+  "Analiso informações e tomo decisões para reduzir riscos ou controlar resultados.",
+  "Faço as coisas de maneira que satisfaçam ou excedam padrões de excelência.",
+  "Colaboro com a equipe de trabalho ou me coloco no lugar deles, se necessário, para terminar uma atividade ou tarefa.",
+  "Ajo repetidamente ou mudo para uma estratégia alternativa, a fim de enfrentar um desafio ou superar um obstáculo.",
+  "Aproveito oportunidades fora do comum para iniciar um novo projeto ou atividade, estabelecer parcerias, ampliar aprendizados.",
+  "Faço um sacrifício pessoal ou um esforço extraordinário para completar uma tarefa.",
+  "Esforço-me para atender ou superar as expectativas das pessoas que me demandam tarefas e atividades diversas.",
+  "Asseguro que o trabalho seja terminado a tempo e que atenda aos padrões de qualidade previamente combinados.",
+  "Coloco-me em situações que implicam desafios ou riscos moderados.",
+  "Estabeleço objetivos de curto prazo mensuráveis.",
+  "Consulto especialistas de um determinado assunto para esclarecimento de dúvidas e busca de apoio na realização de uma tarefa ou atividade.",
+  "Mantenho registros dos meus ganhos e gastos e utilizo-os para tomar decisões sobre compras ou investimentos.",
+  "Tenho boas relações com as pessoas com vistas a manter e ampliar minha rede de contatos.",
+  "Expresso confiança na minha própria capacidade de realizar uma tarefa difícil ou de enfrentar um desafio."
+];
+
+// idx = 0-based question index
+const characteristics = [
+  { name:"Busca de oportunidades e iniciativa", conjunct:"R", questions:[0,10,20] },
+  { name:"Persistência",                        conjunct:"R", questions:[9,19,21] },
+  { name:"Comprometimento",                     conjunct:"R", questions:[8,18,22] },
+  { name:"Exigência de qualidade e eficiência", conjunct:"R", questions:[7,17,23] },
+  { name:"Correr riscos calculados",            conjunct:"R", questions:[6,16,24] },
+  { name:"Estabelecimento de metas",            conjunct:"PL", questions:[5,15,25] },
+  { name:"Busca de informação",                 conjunct:"PL", questions:[4,14,26] },
+  { name:"Planejamento e monitoramento sistemático", conjunct:"PL", questions:[3,13,27] },
+  { name:"Persuasão e rede de contatos",        conjunct:"PO", questions:[2,12,28] },
+  { name:"Independência e autoconfiança",       conjunct:"PO", questions:[1,11,29] }
+];
+
+const conjunctInfo = {
+  R:  { name:"Realização",   emoji:"🏆", max:75, fillClass:"fill-r",  cardClass:"cj-card-r",  labelClass:"label-r",  thClass:"th-r",  badgeClass:"badge-r"  },
+  PL: { name:"Planejamento", emoji:"📋", max:45, fillClass:"fill-pl", cardClass:"cj-card-pl", labelClass:"label-pl", thClass:"th-pl", badgeClass:"badge-pl" },
+  PO: { name:"Poder",        emoji:"💪", max:30, fillClass:"fill-po", cardClass:"cj-card-po", labelClass:"label-po", thClass:"th-po", badgeClass:"badge-po" }
+};
+
+// Which characteristic each question belongs to (for badge display)
+const qCharMap = {};
+characteristics.forEach((c,ci)=>{ c.questions.forEach(qi=>{ qCharMap[qi]=ci; }); });
+
+let current = 0;
+let answers = new Array(30).fill(null);
+let advancing = false;
+
+function startQuiz(){
+  document.getElementById("screen-intro").classList.add("hidden");
+  document.getElementById("screen-question").classList.remove("hidden");
+  renderQuestion();
+}
+
+function renderQuestion(){
+  document.getElementById("q-number").textContent = "Comportamento "+(current+1)+" de 30";
+  document.getElementById("q-text").textContent = (current+1)+") "+behaviors[current];
+
+  const ci = qCharMap[current];
+  const ch = characteristics[ci];
+  const cj = conjunctInfo[ch.conjunct];
+  const badge = document.getElementById("q-char-badge");
+  badge.textContent = ch.name;
+  badge.className = "q-char-badge "+cj.badgeClass;
+
+  const sb = document.getElementById("scale-buttons");
+  sb.innerHTML = "";
+  for(let v=1;v<=5;v++){
+    const btn = document.createElement("button");
+    btn.className = "scale-btn"+(answers[current]===v?" selected":"");
+    btn.textContent = v;
+    btn.onclick = ()=>selectScale(v);
+    sb.appendChild(btn);
+  }
+
+  const pct = Math.round((current/30)*100);
+  document.getElementById("prog-fill").style.width = pct+"%";
+  document.getElementById("prog-label").textContent = (current+1)+" / 30";
+  document.getElementById("prog-pct").textContent = pct+"%";
+  document.getElementById("btn-prev").style.visibility = current===0?"hidden":"visible";
+  document.getElementById("btn-results").style.display = (current===29 && answers[29]!==null)?"block":"none";
+}
+
+function selectScale(v){
+  if(advancing) return;
+  answers[current] = v;
+  document.querySelectorAll(".scale-btn").forEach((b,i)=>b.classList.toggle("selected",i+1===v));
+  if(current<29){
+    advancing = true;
+    setTimeout(()=>{
+      advancing = false;
+      current++;
+      renderQuestion();
+    }, 350);
+  } else {
+    document.getElementById("btn-results").style.display = "block";
+  }
+}
+
+function prevQuestion(){
+  if(current>0){ current--; renderQuestion(); }
+}
+
+function computeScores(){
+  const charScores = characteristics.map(c=>
+    c.questions.reduce((sum,qi)=> sum + (answers[qi]||0), 0)
+  );
+  const conjScores = { R:0, PL:0, PO:0 };
+  characteristics.forEach((c,i)=>{ conjScores[c.conjunct] += charScores[i]; });
+  return { charScores, conjScores };
+}
+
+function showResults(){
+  document.getElementById("screen-question").classList.add("hidden");
+  document.getElementById("screen-results").classList.remove("hidden");
+  const {charScores, conjScores} = computeScores();
+
+  // Conjunct cards
+  const cc = document.getElementById("conjunct-cards");
+  cc.innerHTML = "";
+  ["R","PL","PO"].forEach(k=>{
+    const info = conjunctInfo[k];
+    cc.innerHTML += `<div class="conjunct-card ${info.cardClass}">
+      <div class="cj-card-title">${info.emoji} ${info.name}</div>
+      <div class="cj-card-score">${conjScores[k]}</div>
+      <div class="cj-card-max">de ${info.max}</div>
+    </div>`;
+  });
+
+  // Chart
+  const chartEl = document.getElementById("chart-rows");
+  chartEl.innerHTML = "";
+  const maxScore = Math.max(...charScores);
+  let lastConj = null;
+  characteristics.forEach((c,i)=>{
+    const info = conjunctInfo[c.conjunct];
+    if(c.conjunct !== lastConj){
+      chartEl.innerHTML += `<div class="chart-section-label ${info.labelClass}">${info.emoji} Conjunto de ${info.name}</div>`;
+      lastConj = c.conjunct;
+    }
+    const pct = (charScores[i]/15)*100;
+    const isBest = charScores[i]===maxScore;
+    chartEl.innerHTML += `<div class="chart-row${isBest?" highlight-best":""}">
+      <div class="chart-row-header">
+        <span class="chart-char-name">${c.name}</span>
+        <span class="chart-char-score" style="color:${c.conjunct==='R'?'#16a34a':c.conjunct==='PL'?'#2563eb':'#7c3aed'}">${charScores[i]}/15</span>
+      </div>
+      <div class="chart-bar-bg"><div class="chart-bar-fill ${info.fillClass}" style="width:${pct}%"></div></div>
+    </div>`;
+  });
+
+  // Detail tables
+  const dt = document.getElementById("detail-tables");
+  dt.innerHTML = "";
+  ["R","PL","PO"].forEach(k=>{
+    const info = conjunctInfo[k];
+    const chars = characteristics.filter(c=>c.conjunct===k);
+    let rows = chars.map((c,ci)=>{
+      const idx = characteristics.indexOf(c);
+      const qNums = c.questions.map(qi=>"Q"+(qi+1)+" = "+(answers[qi]||"?")).join(" | ");
+      return `<tr>
+        <td>${c.name}<br><span class="q-nums">${qNums}</span></td>
+        <td style="text-align:center;font-weight:700">${charScores[characteristics.indexOf(c)]}/15</td>
+      </tr>`;
+    });
+    rows.push(`<tr style="background:#f9fafb"><td style="font-weight:700">Total ${info.name}</td><td style="text-align:center;font-weight:800;font-size:1.05rem">${conjScores[k]}/${info.max}</td></tr>`);
+    dt.innerHTML += `<p style="font-size:.9rem;font-weight:700;color:#374151;margin-bottom:8px">${info.emoji} Conjunto de ${info.name}</p>
+    <table class="detail-table"><thead><tr>
+      <th class="${info.thClass}">Característica (questões)</th>
+      <th class="${info.thClass}" style="width:70px">Soma</th>
+    </tr></thead><tbody>${rows.join("")}</tbody></table>
+    <div style="margin-bottom:20px"></div>`;
+  });
+
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function buildResultText(){
+  const {charScores,conjScores} = computeScores();
+  let lines = ["📊 Autoavaliação – Comportamento Empreendedor (SEBRAE)","","Respostas (escala 1–5):"];
+  lines.push(answers.map((a,i)=>"Q"+(i+1)+":"+(a||"?")).join(" | "));
+  lines.push("","📈 Resultados por característica:","");
+  let lastConj = null;
+  characteristics.forEach((c,i)=>{
+    const info = conjunctInfo[c.conjunct];
+    if(c.conjunct!==lastConj){ lines.push(info.emoji+" CONJUNTO DE "+info.name.toUpperCase()+" ("+conjScores[c.conjunct]+"/"+info.max+")"); lastConj=c.conjunct; }
+    lines.push("  • "+c.name+": "+charScores[i]+"/15");
+  });
+  return lines.join("\n");
+}
+
+function copyResult(){
+  const text = buildResultText();
+  const doToast=()=>{const t=document.getElementById("toast");t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2500);};
+  navigator.clipboard.writeText(text).then(doToast).catch(()=>{
+    const ta=document.createElement("textarea");ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);doToast();
+  });
+}
+
+function shareWhatsApp(){
+  const {charScores,conjScores} = computeScores();
+  let msg = "*📊 Autoavaliação – Comportamento Empreendedor (SEBRAE)*\n";
+  msg += "_Disciplina de Empreendedorismo_\n\n";
+  let lastConj = null;
+  characteristics.forEach((c,i)=>{
+    const info = conjunctInfo[c.conjunct];
+    if(c.conjunct!==lastConj){ msg+="\n*"+info.emoji+" "+info.name+" ("+conjScores[c.conjunct]+"/"+info.max+"):*\n"; lastConj=c.conjunct; }
+    msg+="• "+c.name+": "+charScores[i]+"/15\n";
+  });
+  msg+="\n_Feito por Zadoque Carneiro · zadoque.github.io/empreendedorismo-sebrae_";
+  window.open("https://wa.me/?text="+encodeURIComponent(msg),"_blank");
+}
+
+function restartQuiz(){
+  current=0; answers=new Array(30).fill(null); advancing=false;
+  document.getElementById("screen-results").classList.add("hidden");
+  document.getElementById("screen-intro").classList.remove("hidden");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+</script>
+</body>
+</html>

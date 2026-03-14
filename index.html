@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ferramentas de Empreendedorismo – SEBRAE</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Segoe UI',system-ui,sans-serif;background:#f8fafc;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px}
+    .container{max-width:680px;width:100%}
+    header{text-align:center;padding:40px 0 32px}
+    .header-badge{display:inline-block;background:#e0e7ff;color:#4338ca;font-size:.8rem;font-weight:600;padding:5px 14px;border-radius:20px;margin-bottom:16px}
+    header h1{font-size:1.8rem;font-weight:800;color:#111827;margin-bottom:10px;line-height:1.3}
+    header p{color:#6b7280;font-size:.95rem;line-height:1.6;max-width:480px;margin:0 auto}
+    .tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px}
+    @media(max-width:480px){.tools-grid{grid-template-columns:1fr}}
+    .tool-card{background:#fff;border-radius:16px;padding:28px 24px;box-shadow:0 2px 12px rgba(0,0,0,.08);text-decoration:none;display:block;transition:transform .2s,box-shadow .2s;border:2px solid transparent}
+    .tool-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.12)}
+    .tool-card.card-motivacoes{border-color:#e0e7ff}
+    .tool-card.card-motivacoes:hover{border-color:#4338ca}
+    .tool-card.card-acce{border-color:#dcfce7}
+    .tool-card.card-acce:hover{border-color:#16a34a}
+    .tool-icon{font-size:2.5rem;margin-bottom:14px}
+    .tool-title{font-size:1.05rem;font-weight:700;color:#111827;margin-bottom:6px}
+    .tool-desc{font-size:.85rem;color:#6b7280;line-height:1.5;margin-bottom:14px}
+    .tool-meta{display:flex;gap:6px;flex-wrap:wrap}
+    .tool-tag{font-size:.72rem;font-weight:600;padding:3px 8px;border-radius:6px}
+    .tag-indigo{background:#e0e7ff;color:#4338ca}
+    .tag-green{background:#dcfce7;color:#166534}
+    .tag-gray{background:#f3f4f6;color:#6b7280}
+    .tool-arrow{font-size:.85rem;color:#9ca3af;margin-top:10px;display:block}
+    .tool-card.card-motivacoes .tool-arrow{color:#4338ca}
+    .tool-card.card-acce .tool-arrow{color:#16a34a}
+    .info-section{background:#fff;border-radius:16px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,.08);margin-bottom:20px}
+    .info-section h2{font-size:1rem;font-weight:700;color:#111827;margin-bottom:12px}
+    .info-section p{font-size:.875rem;color:#4b5563;line-height:1.6}
+    footer{text-align:center;padding:20px 0;color:#9ca3af;font-size:.78rem;line-height:1.8}
+    footer a{color:#9ca3af;text-decoration:none}
+    footer a:hover{text-decoration:underline}
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="header-badge">Disciplina de Empreendedorismo · SEBRAE</div>
+    <h1>🚀 Ferramentas Interativas<br>do Manual do Aluno</h1>
+    <p>Questionários do Manual do Aluno em formato interativo — responda, veja seu resultado automaticamente e compartilhe.</p>
+  </header>
+
+  <div class="tools-grid">
+    <a href="quiz-motivacoes.html" class="tool-card card-motivacoes">
+      <div class="tool-icon">🎯</div>
+      <div class="tool-title">Questionário de Motivações</div>
+      <div class="tool-desc">Descubra sua motivação predominante: Realização, Afiliação ou Poder.</div>
+      <div class="tool-meta">
+        <span class="tool-tag tag-indigo">10 perguntas</span>
+        <span class="tool-tag tag-gray">3 motivos</span>
+      </div>
+      <span class="tool-arrow">Acessar →</span>
+    </a>
+
+    <a href="acce.html" class="tool-card card-acce">
+      <div class="tool-icon">📈</div>
+      <div class="tool-title">Autoavaliação ACCE</div>
+      <div class="tool-desc">Avalie suas Características do Comportamento Empreendedor em 10 dimensões.</div>
+      <div class="tool-meta">
+        <span class="tool-tag tag-green">30 comportamentos</span>
+        <span class="tool-tag tag-gray">10 caracts.</span>
+      </div>
+      <span class="tool-arrow">Acessar →</span>
+    </a>
+  </div>
+
+  <div class="info-section">
+    <h2>ℹ️ Sobre as ferramentas</h2>
+    <p>Ambos os questionários são extraídos do <strong>Manual do Aluno – SEBRAE (Empretec, 2009)</strong> e fazem parte da Disciplina de Empreendedorismo. Nenhum dado é coletado ou armazenado — tudo roda localmente no seu navegador. Ao final de cada questionário, é possível copiar o resultado ou compartilhá-lo diretamente no WhatsApp.</p>
+  </div>
+</div>
+
+<footer>
+  Feito por <strong>Zadoque Carneiro</strong> &nbsp;·&nbsp; Disciplina de Empreendedorismo<br>
+  Fonte: Manual Empretec (SEBRAE, 2009) · Teoria das Necessidades de McClelland<br>
+  <a href="https://github.com" target="_blank">🔗 Ver código-fonte no GitHub</a>
+</footer>
+</body>
+</html>
